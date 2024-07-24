@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+
   const loginForm = document.querySelector("#contact form");
   const emailInput = document.querySelector("#email");
   const passwordInput = document.querySelector("#pass");
@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   loginForm.appendChild(errorMessage);
 
-  // Fonction pour valider l'email
   function validateEmail(email) {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(email);
@@ -61,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.token) {
           localStorage.setItem("authToken", data.token);
           alert("Connexion réussie!");
-          window.location.href = "index.html";
+          window.location.href = "/FrontEnd/index.html";
         }
       })
       .catch((error) => {
@@ -69,4 +68,4 @@ document.addEventListener("DOMContentLoaded", function () {
         errorMessage.textContent = error.message;
       });
   }
-});
+
