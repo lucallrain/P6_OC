@@ -1,4 +1,4 @@
-
+// Variables
   const loginForm = document.querySelector("#contact form");
   const emailInput = document.querySelector("#email");
   const passwordInput = document.querySelector("#pass");
@@ -6,15 +6,13 @@
   errorMessage.style.color = "red";
   errorMessage.style.marginTop = "10px";
 
-  loginForm.appendChild(errorMessage);
-
+  
+// fonction validation email
   function validateEmail(email) {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(email);
   }
 
-  emailInput.value = "sophie.bluel@test.tld";
-  passwordInput.value = "S0phie";
 
   loginForm.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -37,6 +35,8 @@
     loginUser(email, password);
   });
 
+  loginForm.appendChild(errorMessage);
+// Fonction de connexion
   function loginUser(email, password) {
     fetch("http://localhost:5678/api/users/login", {
       method: "POST",
