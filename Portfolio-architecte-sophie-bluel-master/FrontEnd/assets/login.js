@@ -60,7 +60,7 @@
         if (data.token) {
           localStorage.setItem("authToken", data.token);
           alert("Connexion réussie!");
-          window.location.href = "/FrontEnd/index.html";
+          window.location.href = "/FrontEnd/assets/edit.html";
         }
       })
       .catch((error) => {

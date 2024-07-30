@@ -3,19 +3,87 @@
    License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -23,100 +91,128 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
 	display: block;
 }
+
 body {
 	line-height: 1;
-
 }
-ol, ul {
+
+ol,
+ul {
 	list-style: none;
 }
-blockquote, q {
+
+blockquote,
+q {
 	quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+	content: "";
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
 /** end reset css**/
 body {
 	max-width: 1140px;
 	margin: auto;
-	font-family: 'Work Sans' ;
+	font-family: "Work Sans";
 	font-size: 14px;
-	background-color:  #FFFEF8;
+	background-color: #fffef8;
 }
+
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
-}
-section {
-	margin: 50px 0
+	margin: 50px 0px 50px 0px;
 }
 
-h1{
+section {
+	margin: 50px 0;
+}
+
+h1 {
 	display: flex;
 	flex-direction: column;
-	font-family: 'Syne';
+	font-family: "Syne";
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #b1663c;
 }
 
-h1 > span {
-	font-family: 'Work Sans';
-	font-size:10px;
+h1>span {
+	font-family: "Work Sans";
+	font-size: 10px;
 	letter-spacing: 0.1em;
-;
 }
 
-h2{
-	font-family: 'Syne';
+h2 {
+	font-family: "Syne";
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1d6154;
 }
+
 nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
 }
+
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
+
 li a {
 	text-decoration: none;
-	color:black ;
+	color: black;
 }
-li a:hover{
-	color: #B1663C;
+
+li a:hover {
+	color: #b1663c;
 }
+
 li:hover {
-	color: #B1663C;
+	color: #b1663c;
 }
+
 li img {
-	width:22px;
+	width: 22px;
 }
+
 #introduction {
 	display: flex;
 	align-items: center;
 	padding: 50px;
 }
+
 #introduction figure {
-	flex: 1
+	flex: 1;
 }
+
 #introduction img {
 	display: block;
 	margin: auto;
@@ -124,8 +220,9 @@ li img {
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
 }
+
 #introduction h2 {
 	margin-bottom: 1em;
 }
@@ -133,35 +230,42 @@ li img {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
 }
-.buttons__container{
+#portfolio{
+	position: relative;
+}
+
+.buttons__container {
 	width: 100%;
 	height: 80px;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	gap:10px;
-	padding:40px;
+	gap: 10px;
 }
-.Menu__Button{
+
+.Menu__Button {
 	cursor: pointer;
 	min-width: 100px;
 	height: 37px;
-	border-radius:60px;
-	border: solid 2px #1D6154;
+	border-radius: 60px;
+	border: solid 2px #1d6154;
 	background-color: white;
-	color: #1D6154;
-	font-family: 'Syne';
+	color: #1d6154;
+	font-family: "Syne";
 	font-size: 16px;
 	transition: 0.3s;
 }
+
 .Menu__Button:hover {
-	background-color: #1D6154;
+	background-color: #1d6154;
 	color: white;
 }
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -172,22 +276,24 @@ li img {
 
 .gallery img {
 	width: 100%;
-
 }
+
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
-#contact > * {
-	text-align: center;
 
+#contact>* {
+	text-align: center;
 }
-#contact h2{
+
+#contact h2 {
 	margin-bottom: 20px;
 }
+
 #contact form {
 	text-align: left;
-	margin-top:30px;
+	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
 }
@@ -198,46 +304,146 @@ margin: auto;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 #contact label {
 	margin: 2em 0 1em 0;
 }
+
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"]{
-	font-family: 'Syne';
+input[type="submit"] {
+	font-family: "Syne";
 	font-weight: 700;
 	color: white;
-	background-color: #1D6154;
-	margin : 2em auto ;
+	background-color: #1d6154;
+	margin: 2em auto;
 	width: 180px;
 	text-align: center;
-	border-radius: 60px ;
+	border-radius: 60px;
 }
 
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
 /* ------------------ CSS PAGE CONNEXION -----------------------------------------*/
-#connexion__title{
+#connexion__title {
 	display: flex;
 	justify-content: center;
 }
 
-#forgot{
+#forgot {
 	display: flex;
 	color: black;
 	justify-content: center;
 }
 
+#login{
+	font-weight: 800;
+}
+
 .space1 {
 	padding: 75px;
 }
+
 .space2 {
 	padding: 100px;
 }
+
+/*-------------------------------- CSS PAGE EDIT */
+
+#edition__mode {
+	width: 100vw;
+	margin-left: -50vw;
+	position: relative;
+	left: 50%;
+	background-color: black;
+	color: white;
+	padding: 20px 0px 20px 0px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+}
+
+#edition__mode i {
+	width: 12px;
+	height: 12px;
+	color: white;
+}
+
+#edition__mode p {
+	font-size: 14px;
+	font-weight: 100;
+}
+
+#modif{
+position: absolute;
+display: flex;
+top: 10px;
+right: 350px;
+gap: 10px;
+cursor: pointer;
+}
+
+/*------------------------ CSS MODALE ------------*/
+
+/* Style pour la modale */
+.modale {
+    display: none; /* Masquer par défaut */
+    position: fixed; /* Rester en place lorsque vous faites défiler */
+    z-index: 2; /* Au-dessus de la galerie mais en dessous des autres éléments modaux */
+    left: 0;
+    top: 0;
+    width: 50%; /* Pleine largeur */
+    height: 50%; /* Pleine hauteur */
+    overflow: auto; /* Activer le défilement si nécessaire */
+    background-color: rgba(0, 0, 0, 0.6); /* Couleur de fond semi-transparente */
+}
+
+.modale-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* Ajuster selon vos besoins */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Peut être plus ou moins large selon les besoins */
+    position: relative; /* Pour placer la croix en position absolue */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Style pour les vues dans la modale */
+#view-gallery, #view-add {
+    display: none;
+}
+
+#view-gallery.active, #view-add.active {
+    display: block;
+}
+
+/* Style pour les boutons */
+button {
+    margin-top: 20px;
+}
+
+/* Style pour la galerie en arrière-plan */
+
