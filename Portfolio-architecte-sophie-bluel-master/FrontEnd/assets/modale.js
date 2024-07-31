@@ -24,7 +24,7 @@ async function fetchAndDisplayProjects() {
     }
 }
 
-// Variables pour la modale et ses éléments
+
 const modifBtn = document.getElementById("modif");
 const modale = document.getElementById("modale");
 const closeBtn = document.getElementsByClassName("close")[0];
@@ -33,39 +33,39 @@ const showGalleryViewBtn = document.getElementById("show-gallery-view");
 const viewGallery = document.getElementById("view-gallery");
 const viewAdd = document.getElementById("view-add");
 
-// Ouvrir la modale et afficher la vue Galerie photo
+
 modifBtn.onclick = function() {
     modale.style.display = "block";
     viewGallery.classList.add('active');
     viewAdd.classList.remove('active');
-    fetchAndDisplayProjects(); // Charger les projets lors de l'ouverture
+    fetchAndDisplayProjects();
 }
 
-// Fermer la modale lorsque l'utilisateur clique sur (x)
+
 closeBtn.onclick = function() {
     modale.style.display = "none";
 }
 
-// Fermer la modale lorsque l'utilisateur clique en dehors de la modale
+
 window.onclick = function(event) {
     if (event.target == modale) {
         modale.style.display = "none";
     }
 }
 
-// Afficher la vue Ajouter photo
+
 showAddViewBtn.onclick = function() {
     viewGallery.classList.remove('active');
     viewAdd.classList.add('active');
 }
 
-// Afficher la vue Galerie photo
+
 showGalleryViewBtn.onclick = function() {
     viewGallery.classList.add('active');
     viewAdd.classList.remove('active');
 }
 
-// Gestion du formulaire d'ajout
+
 document.getElementById("modale-form").onsubmit = function(event) {
     event.preventDefault();
 
@@ -73,7 +73,7 @@ document.getElementById("modale-form").onsubmit = function(event) {
     const image = document.getElementById("project-image").files[0];
     
     if (title && image) {
-        // Créer un objet FormData pour envoyer les données
+        
         const formData = new FormData();
         formData.append("title", title);
         formData.append("image", image);
@@ -90,7 +90,7 @@ document.getElementById("modale-form").onsubmit = function(event) {
         })
         .then(data => {
             console.log('Projet ajouté:', data);
-            // Ajouter le nouveau projet à la galerie
+           
             const galleryView = document.getElementById('gallery-view');
             const projectElement = document.createElement('figure');
             projectElement.innerHTML = `

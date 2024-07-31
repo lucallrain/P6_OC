@@ -395,26 +395,26 @@ cursor: pointer;
 
 /*------------------------ CSS MODALE ------------*/
 
-/* Style pour la modale */
 .modale {
-    display: none; /* Masquer par défaut */
-    position: fixed; /* Rester en place lorsque vous faites défiler */
-    z-index: 2; /* Au-dessus de la galerie mais en dessous des autres éléments modaux */
-    left: 0;
-    top: 0;
-    width: 50%; /* Pleine largeur */
-    height: 50%; /* Pleine hauteur */
-    overflow: auto; /* Activer le défilement si nécessaire */
-    background-color: rgba(0, 0, 0, 0.6); /* Couleur de fond semi-transparente */
+    display: none;
+    position: fixed;
+    z-index: 2;
+    left: 50%;
+    top:50%;
+    width: 50%;
+    height: 75%;
+	transform: translate(-50%,-50%);
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+	border-radius: 3%;
 }
 
 .modale-content {
     background-color: #fefefe;
-    margin: 10% auto; /* Ajuster selon vos besoins */
-    padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Peut être plus ou moins large selon les besoins */
-    position: relative; /* Pour placer la croix en position absolue */
+    width: 100%;
+    position: relative;
+	border-radius: 3%;
 }
 
 .close {
@@ -431,7 +431,7 @@ cursor: pointer;
     cursor: pointer;
 }
 
-/* Style pour les vues dans la modale */
+
 #view-gallery, #view-add {
     display: none;
 }
@@ -440,10 +440,9 @@ cursor: pointer;
     display: block;
 }
 
-/* Style pour les boutons */
+
 button {
     margin-top: 20px;
 }
 
-/* Style pour la galerie en arrière-plan */
 
