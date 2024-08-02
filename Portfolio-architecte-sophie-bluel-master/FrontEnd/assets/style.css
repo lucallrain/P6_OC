@@ -395,33 +395,42 @@ cursor: pointer;
 
 /*------------------------ CSS MODALE ------------*/
 
-.modale {
-    display: none;
-    position: fixed;
-    z-index: 2;
-    left: 50%;
-    top:50%;
-    width: 50%;
-    height: 75%;
-	transform: translate(-50%,-50%);
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6);
-	border-radius: 3%;
+/* Style pour la modale */
+.modal {
+    display: none; /* Masqué par défaut */
+    position: fixed; /* Reste en place même lors du défilement */
+    z-index: 1; /* Au-dessus de tout le reste */
+    padding-top: 60px; /* Emplacement de la modale */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Active le défilement si nécessaire */
+    background-color: rgb(0, 0, 0); /* Couleur de fond */
+    background-color: rgba(0, 0, 0, 0.4); /* Fond avec transparence */
 }
 
-.modale-content {
+.modal-content {
     background-color: #fefefe;
+    margin:auto;
+	padding: 5px;
     border: 1px solid #888;
-    width: 100%;
-    position: relative;
-	border-radius: 3%;
+    width: 630px;
+	height: 675px;
+    max-width: 1000px; /* Largeur maximale */
+    text-align: center; /* Centrer le contenu */
+	justify-content: center;
+	border-radius: 1%;
+	position: relative;
 }
 
 .close {
-    color: #aaa;
-    float: right;
+    color: #070707;
+    position: absolute;
+	right: 30px;
+	top: 20px;
     font-size: 28px;
-    font-weight: bold;
+    font-weight: 200;
 }
 
 .close:hover,
@@ -431,18 +440,73 @@ cursor: pointer;
     cursor: pointer;
 }
 
-
-#view-gallery, #view-add {
-    display: none;
+.modal-content h2 {
+	font-family:'Work sans';
+	color: black;
+	font-weight: 500;
+	font-size: 26px;
+	padding-top: 44px;
+}
+.gallery-container {
+    border-bottom: solid 1px #B3B3B3;
+	padding: 50px 0px 60px 0px;
+	margin: 0px 95px 0px 105px;
+	
 }
 
-#view-gallery.active, #view-add.active {
-    display: block;
+.gallery-modal {
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	row-gap: 30px;
+	column-gap: 8px;
 }
 
-
-button {
-    margin-top: 20px;
+.gallery-modal figure {
+    position: relative;
+    margin: 0;
+	width: 77px;
+	height: 105px;
 }
 
+.gallery-modal img {
+    width: 100%;
+    height: auto;
+}
+
+.fa-trash-can {
+    position: absolute;
+    top: 5px;
+    right: 5px; 
+    background-color: black; 
+    color: white; 
+    font-size: 12px;
+    padding: 5px;
+    border-radius: 10%; 
+    cursor: pointer;
+}
+
+.btn-pos {
+	position:absolute;
+	bottom: 50px;
+	width: 85%;
+	padding-left: 40px;
+}
+
+.add-photo-btn {
+    font-family: "Syne";
+    font-weight: 700;
+    color: white;
+    background-color: #1d6154;
+    border: none;
+    border-radius: 30px;
+    width: 240px;
+	height: 36px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-photo-btn:hover {
+    background-color: #144d39;
+}
 

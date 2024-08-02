@@ -1,8 +1,9 @@
-const categoriesSet = new Set(['Tous']);
-
 // Fonction pour récupérer les données de l'API
 async function fetchWorks() {
     try {
+        // Réinitialiser categoriesSet chaque fois que l'API est appelée
+        const categoriesSet = new Set(['Tous']);
+        
         const response = await fetch('http://localhost:5678/api/works');
         if (!response.ok) {
             throw new Error(`Erreur HTTP ! statut : ${response.status}`);
@@ -12,11 +13,12 @@ async function fetchWorks() {
             categoriesSet.add(work.category.name);
         });
         displayWorks(works);
-        updateFilterButtons();
+        updateFilterButtons(categoriesSet);
     } catch (error) {
         console.error('Erreur de récupération des données :', error);
     }
 }
+
 // Fonction pour afficher les projets dans la galerie
 function displayWorks(works) {
     const gallery = document.querySelector('.gallery');
@@ -29,14 +31,14 @@ function displayWorks(works) {
             <img src="${work.imageUrl}" alt="${work.title}">
             <figcaption>${work.title}</figcaption>
         `;
-        // Ajouter une propriété data-name pour faciliter le filtrage (merci FS)
+        // Ajouter une propriété data-name pour faciliter le filtrage
         figure.setAttribute('data-name', work.category.name);
         gallery.appendChild(figure);
     });
 }
 
 // Fonction pour mettre à jour les boutons de filtre
-function updateFilterButtons() {
+function updateFilterButtons(categoriesSet) {
     const buttonsContainer = document.querySelector('.buttons__container');
     buttonsContainer.innerHTML = '';
     categoriesSet.forEach(category => {
@@ -60,4 +62,5 @@ function filterWorks(category) {
         }
     });
 }
+
 document.addEventListener("DOMContentLoaded", fetchWorks);

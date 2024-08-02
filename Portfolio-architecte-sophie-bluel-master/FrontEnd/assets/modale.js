@@ -1,22 +1,70 @@
 
+    document.addEventListener('DOMContentLoaded', (event) => {
+        loadProjects();
+    });
+
+    // Fonction pour charger les projets depuis l'API et mettre à jour le DOM
+    function loadProjects() {
+        fetch('http://localhost:5678/api/works')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const gallery = document.querySelector('#portfolio .gallery');
+                if (gallery) {
+                    gallery.innerHTML = ''; // Vider le contenu existant
+
+                    data.forEach(project => {
+                        const figure = createProjectFigure(project);
+                        gallery.appendChild(figure);
+                    });
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
+    }
+
+    // Fonction pour créer un élément figure pour un projet
+    function createProjectFigure(project) {
+        const figure = document.createElement('figure');
+        figure.setAttribute('data-id', project.id);
+
+        const img = document.createElement('img');
+        img.setAttribute('src', project.imageUrl);
+        img.setAttribute('alt', project.title);
+        figure.appendChild(img);
+
+        const figcaption = document.createElement('figcaption');
+        figcaption.textContent = project.title;
+        figure.appendChild(figcaption);
+
+        return figure;
+    }
+
     // Récupère la modale
-    var modal = document.getElementById("modal");
+    const modal = document.getElementById("modal");
 
     // Récupère le bouton qui ouvre la modale
-    var btn = document.getElementById("modif");
+    const btn = document.getElementById("modif");
 
     // Récupère l'élément <span> qui ferme la modale
-    var span = document.getElementsByClassName("close")[0];
+    const span = document.getElementsByClassName("close")[0];
 
     // Lorsque l'utilisateur clique sur le bouton, ouvre la modale 
-    btn.onclick = function() {
-        modal.style.display = "block";
-        populateGallery();
+    if (btn) {
+        btn.onclick = function() {
+            modal.style.display = "block";
+            populateGallery();
+        }
     }
 
     // Lorsque l'utilisateur clique sur <span> (x), ferme la modale
-    span.onclick = function() {
-        modal.style.display = "none";
+    if (span) {
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
     }
 
     // Lorsque l'utilisateur clique n'importe où en dehors de la modale, la ferme
@@ -28,21 +76,40 @@
 
     // Fonction pour remplir la galerie dans la modale
     function populateGallery() {
-        var gallery = document.querySelector('.gallery-modal');
-        gallery.innerHTML = '';
+        const gallery = document.querySelector('.gallery-modal');
+        if (gallery) {
+            gallery.innerHTML = '';
 
-        var images = document.querySelectorAll('#portfolio .gallery figure img');
-        images.forEach(function(image) {
-            var figure = document.createElement('figure');
-            var imgClone = image.cloneNode(true);
-            
-            var trashIcon = document.createElement('i');
-            trashIcon.classList.add('fa', 'fa-trash', 'trash-icon');
+            fetch('http://localhost:5678/api/works')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    data.forEach(project => {
+                        const figure = document.createElement('figure');
+                        figure.setAttribute('data-id', project.id);
 
-            figure.appendChild(imgClone);
-            figure.appendChild(trashIcon);
+                        const img = document.createElement('img');
+                        img.setAttribute('src', project.imageUrl);
+                        img.setAttribute('alt', project.title);
 
-            gallery.appendChild(figure);
-        });
+                        const trashIcon = document.createElement('i');
+                        trashIcon.classList.add('fa-solid', 'fa-trash-can', 'trash-icon');
+                        trashIcon.onclick = function() {
+                            deleteProject(project.id, figure);
+                        };
+
+                        figure.appendChild(img);
+                        figure.appendChild(trashIcon);
+
+                        gallery.appendChild(figure);
+                    });
+                })
+                .catch(error => console.error('Erreur:', error));
+        }
     }
 
+    
