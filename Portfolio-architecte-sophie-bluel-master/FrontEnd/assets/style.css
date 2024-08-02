@@ -393,6 +393,13 @@ gap: 10px;
 cursor: pointer;
 }
 
+.error-message {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}
+
+
 /*------------------------ CSS MODALE ------------*/
 
 /* Style pour la modale */
