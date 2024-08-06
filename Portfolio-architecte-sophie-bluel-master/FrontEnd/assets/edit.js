@@ -163,15 +163,20 @@ async function deleteProject(projectId, projectElement) {
   }
 }
 
-function displayAddPhotoForm(event) {
+async function displayAddPhotoForm(event) {
   event.preventDefault();
   const modalContent = document.querySelector(".modal-content");
+  const previousContent = modalContent.innerHTML; // Save the current content
+
   modalContent.innerHTML = ""; // Clear existing content
 
   const backButton = document.createElement("button");
   backButton.classList.add("back-button");
   backButton.innerHTML = `<i class="fa-solid fa-arrow-left"></i>`;
-  backButton.addEventListener('click', openModal);
+  backButton.addEventListener('click', () => {
+    modalContent.innerHTML = previousContent; // Restore the previous content
+    setupModalEventListeners(); // Re-setup event listeners for the restored content
+  });
   modalContent.appendChild(backButton);
 
   const formTitle = document.createElement("h2");
@@ -183,29 +188,62 @@ function displayAddPhotoForm(event) {
   form.id = "photo-form";
   form.classList.add("photo-form");
   form.innerHTML = `
+    <span class="close">x</span>
     <div class="form-group photo-upload">
       <label for="photo-file" class="photo-label">
         <div class="photo-upload-box">
-          <img src="upload-icon.png" alt="Ajouter photo" class="upload-icon">
-          <p class="upload-text">+ Ajouter photo</p>
+          <i class="fa-regular fa-image picture_icon"></i>
+          <button type="button" class="upload-text">+ Ajouter photo</button>
+          <input type="file" id="photo-file" name="photo-file" accept="image/*" class="photo-input" style="display: none;">
+      <img id="photo-preview" class="photo-preview">
           <p class="upload-subtext">jpg, png : 4mo max</p>
         </div>
       </label>
-      <input type="file" id="photo-file" name="photo-file" accept="image/*" class="photo-input" required>
+      
     </div>
-    <div class="form-group">
-      <label for="photo-title">Titre :</label>
-      <input type="text" id="photo-title" name="photo-title" required>
+    <div class="form-group second_form">
+      <p class="title_form">Titre</p>
+      <label for="photo-title"></label>
+      <input type="text" id="photo-title" name="photo-title">
     </div>
-    <div class="form-group">
-      <label for="photo-category">Catégorie :</label>
+    <div class="form-group second_form">
+      <p class="title_form">Catégorie</p>
+      <label for="photo-category"></label>
       <select id="photo-category" name="photo-category" required>
         <!-- Add options dynamically -->
       </select>
     </div>
+    <div class="form-separator"></div>
     <button type="submit" class="submit-button">Valider</button>
   `;
   modalContent.appendChild(form);
+
+  // Add event listener to close span
+  const closeSpan = form.querySelector(".close");
+  closeSpan.addEventListener('click', closeModal);
+
+  // Fetch and populate categories
+  await populateCategories();
+
+  const photoFileInput = form.querySelector("#photo-file");
+  const uploadButton = form.querySelector(".upload-text");
+  const photoPreview = form.querySelector("#photo-preview");
+
+  uploadButton.addEventListener('click', () => {
+    photoFileInput.click();
+  });
+
+  photoFileInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        photoPreview.src = e.target.result;
+        photoPreview.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -213,9 +251,22 @@ function displayAddPhotoForm(event) {
   });
 }
 
+async function populateCategories() {
+  const categories = [
+    { id: 1, name: "Objets" },
+    { id: 2, name: "Appartements" },
+    { id: 3, name: "Hotels & restaurants" }
+  ];
+
+  const categorySelect = document.getElementById("photo-category");
+  categorySelect.innerHTML = categories.map(category => 
+    `<option value="${category.id}">${category.name}</option>`
+  ).join('');
+}
+
 async function addPhoto() {
   const photoFileInput = document.getElementById("photo-file");
-  const photoTitle = document.getElementById("photo-title").value;
+  const photoTitle = document.getElementById("photo-title").value || ""; // Allow empty title
   const photoCategory = document.getElementById("photo-category").value;
 
   const formData = new FormData();
