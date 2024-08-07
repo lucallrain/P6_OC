@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.token) {
                 localStorage.setItem("authToken", data.token);
                 console.log("Token enregistré : ", localStorage.getItem("authToken"));
-                window.location.href = "/FrontEnd/assets/edit.html";
+                window.location.href = "/assets/edit.html";
             }
         })
         .catch((error) => {
