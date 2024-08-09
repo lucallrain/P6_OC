@@ -139,7 +139,7 @@ async function displayAddPhotoForm(event) {
     <button class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
     <h2 class="form-title">Ajout photo</h2>
     <form id="photo-form" class="photo-form">
-      <span class="close">x</span>
+      <i class="fa-sharp fa-solid fa-xmark close"></i>
       <div class="form-group photo-upload">
         <label for="photo-file" class="photo-label">
           <div class="photo-upload-box">
@@ -172,7 +172,8 @@ async function displayAddPhotoForm(event) {
   });
 
   // Fonction cross
-  document.querySelector(".close").addEventListener('click', closeModal);
+  document.querySelector(".fa-sharp.fa-solid.fa-xmark")?.addEventListener('click', closeModal);
+
 
   await populateCategories();
 
