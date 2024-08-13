@@ -44,11 +44,11 @@ function createFigureHTML(work) {
 
 async function loadProjectsIntoPortfolio() {
   try {
-    const projects = await fetchFromAPI("http://localhost:5678/api/works"); // Récupère les projets depuis l'API
-    const gallery = document.querySelector("#portfolio .gallery"); // Sélectionne l'élément de la galerie du portfolio
-    gallery.innerHTML = projects.map(createFigureHTML).join(''); // Génère le HTML pour chaque projet et l'insère dans la galerie
+    const projects = await fetchFromAPI("http://localhost:5678/api/works");
+    const gallery = document.querySelector("#portfolio .gallery");
+    gallery.innerHTML = projects.map(createFigureHTML).join('');
   } catch (error) {
-    console.error("Erreur:", error); // Gère les erreurs de récupération des projets
+    console.error("Erreur:", error);
   }
 }
 
@@ -67,16 +67,16 @@ function setupModalEventListeners() {
 
 // Fonction d'ouverture
 function openModal(event) {
-  event.preventDefault(); // Empêche le comportement par défaut du lien
+  event.preventDefault();
   const modal = document.getElementById("modal");
-  modal.style.display = "block"; // Affiche la modale
-  populateModalGallery(); // Remplit la galerie de la modale avec les projets
+  modal.style.display = "block";
+  populateModalGallery();
 }
 
 // Fonctionn de fermeture
 function closeModal() {
   const modal = document.getElementById("modal");
-  modal.style.display = "none"; // Masque la modale
+  modal.style.display = "none";
 }
 
 // Fonction de remplissage modale 
@@ -121,11 +121,11 @@ async function deleteProject(projectId, projectElement) {
 
     if (!response.ok) throw new Error("Network response was not ok");
 
-    projectElement.remove(); // Retire l'élément figure de la galerie après suppression
-    document.querySelector(`.gallery figure[data-id='${projectId}']`)?.remove(); // Retire aussi l'élément de la galerie principale
+    projectElement.remove();
+    document.querySelector(`.gallery figure[data-id='${projectId}']`)?.remove();
     console.log("Project deleted successfully");
   } catch (error) {
-    console.error("Erreur de suppression:", error); // Gère les erreurs de suppression du projet
+    console.error("Erreur de suppression:", error);
   }
 }
 
@@ -230,7 +230,7 @@ async function addPhoto() {
     titleError.style.display = "none";
   }
 
-  const formData = new FormData(); // Crée un objet FormData pour envoyer les données du formulaire (El famoso)
+  const formData = new FormData(); // Crée un objet FormData pour envoyer les données du formulaire 
   formData.append("image", photoFileInput.files[0]);
   formData.append("title", photoTitle);
   formData.append("category", photoCategory);
@@ -241,7 +241,7 @@ async function addPhoto() {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
-      body: formData, // el famoso famoso
+      body: formData, // el famoso 
     });
 
     if (!response.ok) throw new Error("Network response was not ok");
