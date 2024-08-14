@@ -9,30 +9,30 @@ function init() {
   setupModalEventListeners();
 }
 
-// Fonction de récupération
+// Récupération et affichage des travaux
 async function fetchAndDisplayWorks() {
   try {
     const works = await fetchFromAPI("http://localhost:5678/api/works");
-    displayWorks(works);
+    updateGallery(".gallery", works);
   } catch (error) {
     console.error("Erreur de récupération des données :", error);
   }
 }
 
-// Fonction principale et return en JSON
+// Fonction générique pour récupérer des données depuis l'API
 async function fetchFromAPI(url) {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`Erreur HTTP ! statut : ${response.status}`);
   return response.json();
 }
 
-// Fonction d'affichage 
-function displayWorks(works) {
-  const gallery = document.querySelector(".gallery");
+// Mise à jour de la galerie
+function updateGallery(selector, works) {
+  const gallery = document.querySelector(selector);
   gallery.innerHTML = works.map(createFigureHTML).join('');
 }
 
-// Fonction de création de HTML (fig)
+// Génération du HTML pour un élément figure
 function createFigureHTML(work) {
   return `
     <figure data-name="${work.category?.name || 'Inconnu'}" data-id="${work.id}">
@@ -42,17 +42,17 @@ function createFigureHTML(work) {
   `;
 }
 
+// Chargement des projets dans le portfolio
 async function loadProjectsIntoPortfolio() {
   try {
     const projects = await fetchFromAPI("http://localhost:5678/api/works");
-    const gallery = document.querySelector("#portfolio .gallery");
-    gallery.innerHTML = projects.map(createFigureHTML).join('');
+    updateGallery("#portfolio .gallery", projects);
   } catch (error) {
     console.error("Erreur:", error);
   }
 }
 
-// Fonction config des modales
+// Configuration des événements pour les modales
 function setupModalEventListeners() {
   document.getElementById("modif")?.addEventListener('click', openModal);
   document.querySelector(".close")?.addEventListener('click', closeModal);
@@ -65,7 +65,7 @@ function setupModalEventListeners() {
   });
 }
 
-// Fonction d'ouverture
+// Ouverture de la modale
 function openModal(event) {
   event.preventDefault();
   const modal = document.getElementById("modal");
@@ -73,26 +73,26 @@ function openModal(event) {
   populateModalGallery();
 }
 
-// Fonctionn de fermeture
+// Fermeture de la modale
 function closeModal() {
   const modal = document.getElementById("modal");
   modal.style.display = "none";
 }
 
-// Fonction de remplissage modale 
+// Remplissage de la galerie dans la modale
 async function populateModalGallery() {
   const galleryModal = document.querySelector(".gallery-modal");
   if (!galleryModal) return;
 
   try {
     const projects = await fetchFromAPI("http://localhost:5678/api/works");
-    galleryModal.innerHTML = projects.map(createModalFigureHTML).join('');
+    updateGallery(".gallery-modal", projects);
   } catch (error) {
     console.error("Erreur:", error);
   }
 }
 
-// Fonction de la trash
+// Génération du HTML pour un élément figure dans la modale
 function createModalFigureHTML(project) {
   return `
     <figure data-id="${project.id}">
@@ -102,9 +102,9 @@ function createModalFigureHTML(project) {
   `;
 }
 
-// Fonction suppression Projet 
+// Suppression d'un projet
 async function deleteProject(projectId, projectElement) {
-  const token = localStorage.getItem("authToken"); // Récupère le token d'authentification
+  const token = localStorage.getItem("authToken");
   if (!token) {
     console.error("No auth token found");
     return;
@@ -129,13 +129,21 @@ async function deleteProject(projectId, projectElement) {
   }
 }
 
-// Fonction 2nd modale
+// Affichage du formulaire pour ajouter une photo
 async function displayAddPhotoForm(event) {
   event.preventDefault();
   const modalContent = document.querySelector(".modal-content");
   const previousContent = modalContent.innerHTML;
 
-  modalContent.innerHTML = `
+  modalContent.innerHTML = getAddPhotoFormHTML();
+
+  setupAddPhotoFormListeners(previousContent);
+  await populateCategories();
+}
+
+// Récupération du HTML pour le formulaire d'ajout de photo
+function getAddPhotoFormHTML() {
+  return `
     <button class="back-button"><i class="fa-solid fa-arrow-left"></i></button>
     <h2 class="form-title">Ajout photo</h2>
     <form id="photo-form" class="photo-form">
@@ -164,46 +172,44 @@ async function displayAddPhotoForm(event) {
       <button type="submit" class="submit-button">Valider</button>
     </form>
   `;
+}
 
-
+// Configuration des événements pour le formulaire d'ajout de photo
+function setupAddPhotoFormListeners(previousContent) {
   document.querySelector(".back-button").addEventListener('click', () => {
-    modalContent.innerHTML = previousContent;
+    document.querySelector(".modal-content").innerHTML = previousContent;
     setupModalEventListeners();
   });
 
-  // Fonction cross
   document.querySelector(".fa-sharp.fa-solid.fa-xmark")?.addEventListener('click', closeModal);
 
-
-  await populateCategories();
-
-  
   document.querySelector(".upload-text").addEventListener('click', () => {
     document.getElementById("photo-file").click();
   });
 
+  document.getElementById("photo-file").addEventListener('change', previewPhoto);
 
-  document.getElementById("photo-file").addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const photoPreview = document.getElementById("photo-preview");
-        photoPreview.src = e.target.result;
-        photoPreview.style.display = "block"; // Affiche l'aperçu de la photo
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-
- 
   document.getElementById("photo-form").addEventListener('submit', async (event) => {
     event.preventDefault();
     await addPhoto();
   });
 }
 
-// Fonction de récup des cat via API
+// Prévisualisation de la photo avant ajout
+function previewPhoto(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const photoPreview = document.getElementById("photo-preview");
+      photoPreview.src = e.target.result;
+      photoPreview.style.display = "block"; // Affiche l'aperçu de la photo
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+// Remplissage des catégories dans le formulaire
 async function populateCategories() {
   try {
     const categories = await fetchFromAPI("http://localhost:5678/api/categories");
@@ -216,7 +222,7 @@ async function populateCategories() {
   }
 }
 
-// Fonction de de l'Add
+// Ajout d'une nouvelle photo
 async function addPhoto() {
   const photoFileInput = document.getElementById("photo-file");
   const photoTitle = document.getElementById("photo-title").value;
@@ -230,7 +236,7 @@ async function addPhoto() {
     titleError.style.display = "none";
   }
 
-  const formData = new FormData(); // Crée un objet FormData pour envoyer les données du formulaire 
+  const formData = new FormData();
   formData.append("image", photoFileInput.files[0]);
   formData.append("title", photoTitle);
   formData.append("category", photoCategory);
@@ -241,16 +247,18 @@ async function addPhoto() {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
-      body: formData, // el famoso 
+      body: formData,
     });
 
     if (!response.ok) throw new Error("Network response was not ok");
 
     const createdProject = await response.json();
+
+    // Ajouter la nouvelle image à la galerie sans recharger la page
     document.querySelector(".gallery").innerHTML += createFigureHTML(createdProject);
+
     closeModal();
     document.getElementById("photo-form").reset();
-    window.location.reload();
   } catch (error) {
     console.error("Erreur d'ajout de photo:", error);
   }
